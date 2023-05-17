@@ -29,21 +29,37 @@ const material = new THREE.MeshBasicMaterial({color: 0xffffff})
 const mesh = new THREE.Mesh(planet,material)
 scene.add(mesh)
 
+// Important Astral body parameters
+
+const mass = 4
+
 // Spawn asteroid
 
 const asteroid = new THREE.SphereGeometry(0.2)
 const material2 = new THREE.MeshBasicMaterial({color: 0xffff00})
 const mesh2 = new THREE.Mesh(asteroid,material2)
 
-mesh2.position.set(5,0,0);
+mesh2.position.set(10,0,0);
 scene.add(mesh2)
+
+// Calculate force Vector 
+ 
+
+// visualise force vector
+const length = 1;
+const hex = 0xffff00;
+
+let arrowHelper = new THREE.ArrowHelper( mesh2.position.normalize().multiplyScalar(-1), new THREE.Vector3(0,0,0), length, hex );
+mesh2.add( arrowHelper );
 
 function animate(){
     requestAnimationFrame(animate);
     controls.update()
     renderer.render( scene, camera);
-    mesh2.position.x -= 0.1
-    mesh2.position.z -= 0.3
+    mesh2.position.x -= 0.01
+    mesh2.position.z -= 0.05
+    arrowHelper.setDirection(mesh2.get)
+
 }
 
 animate();
